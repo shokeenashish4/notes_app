@@ -15,6 +15,7 @@ class NoteDetailsScreen extends StatefulWidget {
 class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
   final titleController = TextEditingController();
   final contentController = TextEditingController();
+  Color? currentNoteColor;
 
   @override
   void initState() {
@@ -22,6 +23,7 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
     if (data != null) {
       titleController.text = data.title;
       contentController.text = data.content;
+      currentNoteColor = data.color;
     }
     super.initState();
   }
@@ -29,7 +31,9 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: currentNoteColor,
       appBar: AppBar(
+        backgroundColor: currentNoteColor,
         leading: IconButton(
           onPressed: () {
             Navigator.of(context).pop();
@@ -45,6 +49,7 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
                   NoteData(
                     title: titleController.text,
                     content: contentController.text,
+                    color: currentNoteColor,
                   ),
                 );
                 Navigator.of(context).pop();
@@ -79,9 +84,42 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
                 ),
               ),
             ),
+            Container(
+              alignment: Alignment.topCenter,
+              height: 80,
+              width: double.infinity,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: noteColors
+                    .map((color) => Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                currentNoteColor = color;
+                              });
+                            },
+                            child: Container(
+                              height: 80,
+                              width: 80,
+                              color: color,
+                            ),
+                          ),
+                        ))
+                    .toList(),
+              ),
+            )
           ],
         ),
       ),
     );
   }
 }
+
+final noteColors = [
+  Colors.red,
+  Colors.blue,
+  Colors.green,
+  Colors.orange,
+  Colors.grey,
+];
