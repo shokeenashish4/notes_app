@@ -80,7 +80,8 @@ class _NotesListScreenState extends State<NotesListScreen> {
                           context: context,
                           builder: (context) {
                             return AlertDialog(
-                              title: const Text("Confirm deletion?"),
+                              title:
+                                  const Text("Confirm deletion? Pakka bolo?"),
                               content: const Text(
                                 "Are you sure you want to delete this note?",
                               ),
